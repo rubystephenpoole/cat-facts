@@ -1,14 +1,21 @@
 import React from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
-import { IconButton } from "./";
+import styled, { StyledFunction } from "styled-components";
+import { IconButton, StyledIconButton } from "./IconButton";
+
+interface InputProps {
+  label: string;
+  isValid: boolean;
+  value: string;
+  onChange: Function;
+  icon: typeof IconButton;
+}
 
 const StyledInputWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin: 30px 0;
 
-  ${IconButton} {
+  ${StyledIconButton} {
     display: flex;
     align-items: flex-end;
   }
@@ -19,7 +26,7 @@ const StyledInputLabel = styled.p`
 `;
 
 const StyledInput = styled.input`
-  border: ${({ isValid }) =>
+  border: ${({ isValid }: InputProps) =>
     isValid ? "0.1429rem solid transparent" : "0.1429rem solid #e31717"};
   border-radius: 0.2143rem;
   &:focus {
@@ -27,7 +34,13 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = ({ label, isValid = true, value, onChange, icon: Icon }) => (
+const Input = ({
+  label,
+  isValid = true,
+  value,
+  onChange,
+  icon: Icon
+}: InputProps) => (
   <StyledInputWrapper>
     <div>
       <StyledInputLabel>{label}</StyledInputLabel>
@@ -41,12 +54,4 @@ const Input = ({ label, isValid = true, value, onChange, icon: Icon }) => (
   </StyledInputWrapper>
 );
 
-Input.propTypes = {
-  label: PropTypes.string,
-  isValid: PropTypes.bool,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  icon: PropTypes.func
-};
-
-export { Input };
+export { Input, InputProps };

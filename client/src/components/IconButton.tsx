@@ -1,18 +1,25 @@
 import React from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import styled, { StyledComponent } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const IconButtonType = {
-  Redo: "redo",
-  PaperPlane: "paper-plane"
-};
+enum IconButtonType {
+  Redo = "redo",
+  PaperPlane = "paper-plane"
+}
+
+interface IconButtonProps {
+  enabled?: boolean;
+  children?: React.ReactElement<unknown>;
+  onClick?: Function;
+  type?: IconButtonType;
+}
 
 const StyledIconButton = styled.button`
   background: none;
   border: none;
-  cursor: ${({ enabled }) => (enabled ? "pointer" : "default")};
-  opacity: ${({ enabled }) => (enabled ? "1" : "0.3")};
+  cursor: ${({ enabled }: IconButtonProps) =>
+    enabled ? "pointer" : "default"};
+  opacity: ${({ enabled }: IconButtonProps) => (enabled ? "1" : "0.3")};
   transition: 0.1s opacity ease-in;
 
   &:focus {
@@ -20,23 +27,23 @@ const StyledIconButton = styled.button`
   }
 `;
 
-const IconButton = ({ enabled = true, children = null, onClick, type }) => (
+const IconButton = ({
+  enabled = true,
+  children = null,
+  onClick,
+  type
+}: IconButtonProps) => (
   <StyledIconButton
     enabled={enabled}
     onClick={() => {
       enabled && onClick();
     }}
   >
-    {type && <FontAwesomeIcon icon={type} size="lg" color="white" />}
-    {children}
+    <>
+      {type && <FontAwesomeIcon icon={type} size="lg" color="white" />}
+      {children}
+    </>
   </StyledIconButton>
 );
 
-IconButton.propTypes = {
-  children: PropTypes.node,
-  enabled: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(Object.values(IconButtonType))
-};
-
-export { IconButton };
+export { IconButton, StyledIconButton, IconButtonProps, IconButtonType };

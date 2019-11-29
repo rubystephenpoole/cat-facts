@@ -3,7 +3,7 @@ import { Reset } from "styled-reset";
 import styled from "styled-components";
 import { Input, Fact, IconButton } from ".";
 import { useFact, useSendMessage } from "../hooks";
-import { IconButtonType } from "./IconButton";
+import { IconButtonType, StyledIconButton } from "./IconButton";
 
 const StyledApp = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const StyledApp = styled.div`
   width: 100vw;
   overflow: hidden;
 
-  ${IconButton} {
+  ${StyledIconButton} {
     margin: 0 auto;
   }
 `;
@@ -54,7 +54,7 @@ export const App = () => {
     fetchFact();
   }, [sid]);
 
-  const onPhoneNumberChange = value => {
+  const onPhoneNumberChange = (value: string) => {
     setPhoneNumberIsValid(value.length === 11);
     setPhoneNumber(value);
   };

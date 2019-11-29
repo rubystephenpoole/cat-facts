@@ -1,12 +1,30 @@
+enum ResponseStatus {
+  Success = "success",
+  Error = "error"
+}
+
+interface FactResponseData {
+  fact: string;
+}
+
+interface SendMessageResponseData {
+  sid: string;
+}
+
+interface Response {
+  status: ResponseStatus;
+  data: unknown;
+}
+
 class ServerAPI {
-  static get(path) {
+  static get(path: string): Promise<unknown> {
     return fetch(`${process.env.API_HOSTNAME}${path}`)
       .then(response => response.json())
-      .then(({ data }) => data)
+      .then(({ data }: Response) => data)
       .catch(error => console.error(error));
   }
 
-  static post(path, body = {}) {
+  static post(path: string, body = {}): Promise<unknown> {
     return fetch(`${process.env.API_HOSTNAME}${path}`, {
       method: "POST",
       body: JSON.stringify(body),
@@ -15,16 +33,28 @@ class ServerAPI {
       }
     })
       .then(response => response.json())
-      .then(({ data }) => data)
+      .then(({ data }: Response) => data)
       .catch(error => console.error(error));
   }
 
-  static sendMessage(message, to) {
-    return ServerAPI.post("/message/send", { message, to });
+  static async sendMessage(
+    message: string,
+    to: string
+  ): Promise<SendMessageResponseData> {
+    const data: SendMessageResponseData = (await ServerAPI.post(
+      "/message/send",
+      {
+        message,
+        to
+      }
+    )) as SendMessageResponseData;
+    return data;
   }
 
-  static async getFact() {
-    const { fact } = await ServerAPI.get("/fact");
+  static async getFact(): Promise<string> {
+    const { fact }: FactResponseData = (await ServerAPI.get(
+      "/fact"
+    )) as FactResponseData;
     return fact;
   }
 }

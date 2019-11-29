@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ServerAPI } from "../api";
 
-const useSendMessage = (to, message) => {
+const useSendMessage = (to: string, message: string) => {
   const [isFetching, setIsFetching] = useState(false);
   const [result, setResult] = useState();
 
