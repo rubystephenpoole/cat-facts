@@ -6,15 +6,18 @@ const Dotenv = require("dotenv-webpack");
 module.exports = {
   devtool: "sourcemap",
   mode: "development",
-  entry: ["@babel/polyfill", "./src/index.js"],
+  entry: ["@babel/polyfill", "./src/index.tsx"],
   output: { filename: "[name].js" },
   devServer: {
     contentBase: "./dist"
   },
+  resolve: {
+    extensions: [".js", ".ts", ".tsx"]
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.js?x|ts?x$/,
         exclude: /node_modules/,
         loader: "babel-loader",
         options: {
@@ -22,7 +25,11 @@ module.exports = {
             "@babel/plugin-syntax-dynamic-import",
             "@babel/plugin-proposal-class-properties"
           ],
-          presets: ["@babel/preset-env", "@babel/preset-react"]
+          presets: [
+            "@babel/preset-env",
+            "@babel/preset-typescript",
+            "@babel/preset-react"
+          ]
         }
       }
     ]

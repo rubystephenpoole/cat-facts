@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Reset } from "styled-reset";
 import styled from "styled-components";
-import { Input, Fact, IconButton } from "./";
+import { Input, Fact, IconButton } from ".";
 import { useFact, useSendMessage } from "../hooks";
 import { IconButtonType } from "./IconButton";
 
