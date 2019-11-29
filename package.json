@@ -2,6 +2,13 @@
   "name": "cat-facts",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "part-1": "git checkout part-1",
+    "part-2": "git checkout part-2",
+    "part-3": "git checkout part-3",
+    "part-4": "git checkout part-4",
+    "part-5": "git checkout part-5"
+  },
   "license": "MIT",
   "private": true,
   "workspaces": [
